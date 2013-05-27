@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+body {
+    width: 95%;
+    margin: 0 auto;
+    border: thick dotted #aaaaaa;
+}
+
+#container {
+	border: medium dashed #000000;
+}
+
+#leftside {
+	border: medium solid #aa22aa;
+	float: left;
+	width: 30%;
+}
+
+#middle {
+	border: medium solid #c3a525;
+	float: left;
+	width: 30%;
+}
+
+#rightside {
+	border: medium solid #8a32fb;
+	float: left;
+	width: 38%;
+}
+
+#footer{
+	border: medium solid #458319;
+	clear: left;
+}
+
