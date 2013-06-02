@@ -7,21 +7,36 @@
 		<link rel="stylesheet" href="http://localhost:8000/site_media/app.css">
 		<link rel="stylesheet" href="http://localhost:8000/site_media/base.css">
 		<link rel="stylesheet" href="http://localhost:8000/site_media/jquery-ui-1.10.3.custom/css/dot-luv/jquery-ui-1.10.3.custom.min.css">
-		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<script src="http://d3js.org/d3.v3.js"></script>
 		<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
 		<script src="http://localhost:8000/site_media/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<style type="text/css">
+			<!--
+			h1{font-family:"Impact";font-size: 28pt;}
+			p{line-height:23pt;font-family:"serif";font-size: 18pt;}
+			
+			-->
+		</style>
 	</head>
 	<body>
-	<div　id="header">header</div>
+	<div　id="header">
+		<h1>Shake Hands Translation</h1>
+	
+	</div>
 		<div id="container">
 			<div id="leftside">
-				left
+				<p>●彼の口元をちょっと眺ながめた時、私はまた何か出て来るなとすぐ疳付いたのですが、それがはたして何の準備なのか、私の予覚はまるでなかったのです。</p>
+				<p>●だから驚いたのです。</p>
+				<p>●彼の重々しい口から、彼のお嬢さんに対する切ない恋を打ち明けられた時の私を想像してみて下さい。</p>
+				<p>●私は彼の魔法棒のために一度に化石されたようなものです。</p>
 			</div>
 			<div id="middle">
 				middle
 			</div>
 			<div id="rightside">
 				right
+				<div id="initialJson" style="display:none">{% url shakeHtra.graphIO.views.initialJson %}</div>
+				<div id="currentJson" ></div>
 				<script src="http://localhost:8000/site_media/app.js"></script>
 				<form id="id_test" action="{% url shakeHtra.graphIO.views.test %}" method="POST">
 					{{ form.as_p }}

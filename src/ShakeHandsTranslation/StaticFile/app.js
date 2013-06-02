@@ -1,9 +1,8 @@
 // set up SVG for D3
+
 var width  = $("#rightside").width()-10,
     height = 300,
     colors = d3.scale.category10();
-
-console.log(width);
 
 var svg = d3.select('#rightside')
   .append('svg')
@@ -14,16 +13,98 @@ var svg = d3.select('#rightside')
 //  - nodes are known by 'id', not by index in array.
 //  - reflexive edges are indicated on the node (as a bold black circle).
 //  - links are always source < target; edge directions are set by 'left' and 'right'.
+
+/*
+json={};
+// #30ryo
+//引数にデータを操作する関数
+json.load = function (loadData){
+	$.ajax({
+	    "url": $("#initialJson").text(),
+	    "type": "GET",
+	    "dataType": "json", // ビューが返すデータの種類を指定
+	    "success": function(d){
+	        // 送受信完了した際の処理をここに記述
+	    	console.log("success loadJson")
+	    	loadData(d);
+	   	},
+		"error": function(){
+			console.log("failed loadJson");
+			}
+	   	}
+	);
+}
+
+json.load(function(d){
+			//console.log("bbb");
+			//console.log(d);
+			$("#currentJson").append(d.nodes[0].id).append(d.links[0].left).append(d.lastNodeId);
+			//append node
+			
+			});
+*/
+
 var nodes = [
     {id: 0, reflexive: false},
-    {id: 1, reflexive: true },
-    {id: 2, reflexive: false}
+    {id: 1, reflexive: false},
+    {id: 2, reflexive: false},
+    {id: 3, reflexive: false}
   ],
-  lastNodeId = 2,
+  lastNodeId = 3,
   links = [
     {source: nodes[0], target: nodes[1], left: false, right: true },
     {source: nodes[1], target: nodes[2], left: false, right: true }
   ];
+
+var initialJson = $.ajax({
+    url: $("#initialJson").text(),
+    type: "GET",
+    dataType: "json", // ビューが返すデータの種類を指定
+    async: false,
+    success: function(d){
+        // 送受信完了した際の処理をここに記述
+    	console.log("success nodes2")
+   	},
+	error: function(){
+		console.log("failed nodes2");
+		}
+   	}).responseText;
+
+
+var parsedJson = JSON.parse(initialJson);
+
+var nodes2 = parsedJson.nodes;
+//var nodes2 = [];
+//nodes2.push(parsedJson.nodes[0]);
+//nodes2.push(parsedJson.nodes[1]);
+//nodes2.push(parsedJson.nodes[2]);
+
+var nodes3 = [
+              {id: parsedJson.nodes[0].id, reflexive: parsedJson.nodes[0].reflexive},
+              {id: parsedJson.nodes[1].id, reflexive: parsedJson.nodes[1].reflexive},
+              {id: parsedJson.nodes[2].id, reflexive: parsedJson.nodes[2].reflexive},
+              ];
+
+
+var lastNodeId2 = parsedJson.lastNodeId;
+var links2 = parsedJson.links;
+
+console.log("nodes");
+console.log(nodes);
+console.log("links");
+console.log(links);
+console.log("lastNodeId");
+console.log(lastNodeId);
+
+console.log("nodes2");
+console.log(nodes2);
+console.log("links2");
+console.log(links2);
+console.log("lastNodeId2");
+console.log(lastNodeId2);
+
+console.log("nodes3");
+console.log(nodes3);
 
 // #30ryo
 // 差分管理用配列
@@ -32,11 +113,11 @@ var change = [[],,[]];
 // init D3 force layout
 var force = d3.layout.force()
     .nodes(nodes)
-    .links(links)
+    .links(links2)
     .size([width, height])
     .linkDistance(150)
     .charge(-500)
-    .on('tick', tick)
+    .on('tick', tick);
 
 // define arrow markers for graph links
 svg.append('svg:defs').append('svg:marker')
@@ -149,10 +230,12 @@ function restart() {
 
   // add new nodes
   var g = circle.enter().append('svg:g');
-
-  g.append('svg:circle')
+  
+  // ここをいじると、ノードの図形を変更できる。
+  g.append('svg:ellipse')
     .attr('class', 'node')
-    .attr('r', 12)
+    .attr('rx', 12)
+    .attr('ry', 8)
     .style('fill', function(d) { return (d === selected_node) ? d3.rgb(colors(d.id)).brighter().toString() : colors(d.id); })
     .style('stroke', function(d) { return d3.rgb(colors(d.id)).darker().toString(); })
     .classed('reflexive', function(d) { return d.reflexive; })
@@ -365,7 +448,7 @@ function keydown() {
 function keyup() {
   lastKeyDown = -1;
 
-  // ctrl
+  // keyCode17はctrlキー
   if(d3.event.keyCode === 17) {
     circle
       .on('mousedown.drag', null)
@@ -384,6 +467,7 @@ d3.select(window)
 restart();
 
 
+// #30ryo
 //ajaxで通信処理
 TEST = {}
 TEST.test = function() {

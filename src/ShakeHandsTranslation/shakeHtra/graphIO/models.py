@@ -5,7 +5,12 @@ from py2neo import neo4j
 from django.utils import simplejson
 
 
-neo4j_db = neo4j.GraphDatabaseService(neo4j.DEFAULT_URI)
+
+class NodeManagement(object):
+    def __init__(self):
+        self.neo4j_db = neo4j.GraphDatabaseService(neo4j.DEFAULT_URI)
+        
+    
 
 
 

@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^index/', "shakeHtra.graphIO.views.index"),
     url(r'^test/', "shakeHtra.graphIO.views.test"),
+    url(r'^initialJson',"shakeHtra.graphIO.views.initialJson"),
     url(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', 
      {'document_root': 'C:/Users/30ryo/Documents/GitHub/shakeHtra/src/ShakeHandsTranslation/StaticFile'}),
 )
